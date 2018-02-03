@@ -29,9 +29,9 @@ def gauss_kernel_sample(data, example):
 
 	return(gauss_kernel_sample)
 
-def read_data(args):
+def read_data(k,d):
 	# Training data
-	filename = "data_work/" + "Xtr" + args + "_mat64_5.csv"	
+	filename = "data_work/" + "Xtr" + k + "_mat64_" + d + ".csv"	
 	print(filename)
 	data = open(filename, 'r')
 	data_train = []
@@ -44,7 +44,7 @@ def read_data(args):
 	K_train = X_train.dot(X_train.T)
 
 	# labels
-	filename = "data_work/" + "Ytr" + args + "_mat64_5.csv" # + "_train.csv"
+	filename = "data_work/" + "Ytr" + k + "_mat64_" + d + ".csv"
 	print(filename)
 	data = open(filename, 'r')
 	y_train = []
@@ -60,7 +60,7 @@ def read_data(args):
 	print(y_train.shape)
 	
 	########### CV data ########################
-	filename = "data_work/" + "Xcv" + args + "_mat64_5.csv"	
+	filename = "data_work/" + "Xcv" + k + "_mat64_" + d + ".csv"	
 	print(filename)
 	data = open(filename, 'r')
 	data_cv = []
@@ -71,7 +71,7 @@ def read_data(args):
 	X_cv = np.array(data_cv)
 	
 	# labels
-	filename = "data_work/" + "Ycv" + args + "_mat64_5.csv"
+	filename = "data_work/" + "Ycv" + k + "_mat64_" + d + ".csv"
 	print(filename)
 	data = open(filename, 'r')
 	y_cv = []
@@ -198,9 +198,10 @@ def main(args):
 
 	result = open(filename, 'w+')
 	result.write(",Bound\n")
-	for k in range(1):
+	
+	for k in range(int(args[0])):
 		######## Generating Kernel ################
-		X_train, K_train, y_train,X_test, y_test = read_data(str(k))
+		X_train, K_train, y_train,X_test, y_test = read_data(str(k),str(args[1]))
 		print(y_train)
 		######## Training #################
 		alpha = fit(K_train, y_train)
